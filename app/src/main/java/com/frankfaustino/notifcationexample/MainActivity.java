@@ -3,10 +3,13 @@ package com.frankfaustino.notifcationexample;
 import android.accounts.Account;
 import android.accounts.AuthenticatorException;
 import android.accounts.OperationCanceledException;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import com.clover.sdk.util.CloverAccount;
 import com.clover.sdk.util.CloverAuth;
@@ -14,13 +17,18 @@ import com.clover.sdk.util.CloverAuth;
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
+    public static final String EXTRA_PAYLOAD = "payload";
     private static final String TAG = "⚡️";
     private Account account;
+    private TextView resultText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        resultText = findViewById(R.id.result_text);
+        resultText.setVisibility(View.GONE);
 
         account = CloverAccount.getAccount(this);
 
@@ -33,6 +41,13 @@ public class MainActivity extends AppCompatActivity {
             GetAccountDetails getAccountDetails = new GetAccountDetails();
             getAccountDetails.execute();
         }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        Log.d(TAG, "onNewIntent");
+        resultText.setVisibility(View.VISIBLE);
+        resultText.setText(getString(R.string.result, intent.getStringExtra(EXTRA_PAYLOAD)));
     }
 
     private class GetAccountDetails extends AsyncTask<Void, Void, Void> {

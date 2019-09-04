@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Notifcation Example</string>
+    <string name="instruction">POST to \"/v3/apps/{{appId}}/merchants/{{merchantId}}/notifications\" with the following JSON to test your notification receiver:\n\n{\n\u00A0\u00A0\"event\": \"test_notification\",\n\u00A0\u00A0\"data\": \"Up to 4k of data\"\n}</string>
+    <string name="result">🔥 Notification Received: %s</string>
 </resources>
